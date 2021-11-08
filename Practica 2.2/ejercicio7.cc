@@ -8,7 +8,7 @@
 
 int main(){
 
-	umask(027);
+	umask(750);
 
     int puntero = open("/home/usuarioso/Desktop/ficherosPrueba/fichero2.txt", O_CREAT, 645);
 
