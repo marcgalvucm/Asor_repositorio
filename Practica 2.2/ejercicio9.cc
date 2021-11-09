@@ -8,16 +8,16 @@
 
 int main(){
 
-	struct stat* statbuf;
+	struct stat statbuf;
 
-	int resultado = stat("/home/usuarioso/Desktop/ficherosPrueba/fichero2.txt",statbuf);
+	int resultado = stat("/home/usuarioso/Desktop/ficherosPrueba/fichero2.txt",&statbuf);
 	if(resultado == -1){
 		perror("Se ha producido un error en la funcion stat()");
 	}
 	else{
-		printf("Inodo del fichero: %li\n", statbuf->st_ino);
-		printf("Tipo de fichero: %d\n", statbuf->st_mode);
-		printf("Hora que se accedio por ultima vez: %i\n", statbuf->st_atim);
+		printf("Inodo del fichero: %li\n", statbuf.st_ino);
+		printf("Tipo de fichero: %d\n", statbuf.st_mode);
+		printf("Hora que se accedio por ultima vez: %i\n", statbuf.st_atim);
 	}
 	
 }
