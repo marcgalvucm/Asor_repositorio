@@ -33,31 +33,24 @@ int main(int argc, char** argv){
 
     int sock = socket(res->ai_family, res->ai_socktype, res->ai_protocol);   // Creacion del socket UDP
 
-    int dir_local = connect(sock, (struct sockaddr*) res->ai_addr, res->ai_addrlen);      // Conectamos el cliente al servidor
-
-    if(dir_local != 0){
-        perror("Se ha producido un error al realizar el bind()");
-        return 1;
-    }
-
-    char buffer[100];
-    scanf("%s", buffer);
-
     sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
 
-    char output[100];
-    
-    while (buffer != "q"){
-        
-        sendto(sock, buffer, 80, 0, (struct sockaddr *) &addr, addrlen);
-        
-        ssize_t c = recvfrom(sock, output, 80, 0, (struct sockaddr *) &addr, &addrlen);
-        printf("%s\n", output);
-        
-        scanf("%s", buffer);
+    char buffer[100];
 
+    printf("Comando: %s\n", argv[3]);
+
+    if(sendto(sock, argv[3], 80, 0, (struct sockaddr *) &addr, addrlen) == -1){
+        perror("Se ha producido un error al hacer el sendto()");
+        return 1;
     }
+    
+    if(recvfrom(sock, buffer, 100, 0, (struct sockaddr *) &addr, &addrlen) == -1){
+        perror("Se ha producido un error al hacer el recvfrom()");
+        return 1;
+    }
+
+    printf("%s\n", buffer);
 
     close(sock);
 
