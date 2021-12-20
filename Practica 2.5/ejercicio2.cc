@@ -55,7 +55,7 @@ int main(int argc, char** argv){
 
         getnameinfo((struct sockaddr *) &addr, addrlen, host, NI_MAXHOST, server, NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV);
 
-        if(buffer == "t"){
+        if(buffer[0] == 't'){
             printf("Recibidos %d bytes de %s: %s\n", c, host, server);
 
             time_t rawtime;
@@ -68,19 +68,19 @@ int main(int argc, char** argv){
             sendto(sock, output, c, 0, (struct sockaddr *) &addr, addrlen);
 
         }
-        else if(buffer == "d"){
+        else if(buffer[0] == 'd'){
             printf("Recibidos %d bytes de %s: %s\n", c, host, server);
 
             time_t rawtime;
             struct tm* info;
             time(&rawtime);
             info = localtime(&rawtime);
-            char output[128];
-            strftime(output,128,"%y-%m-%d",info);
+            char output[200];
+            strftime(output,200,"%y-%m-%d",info);
 
             sendto(sock, output, c, 0, (struct sockaddr *) &addr, addrlen);
         }
-        else if(buffer == "q"){
+        else if(buffer[0] == 'q'){
             printf("Saliendo...\n");
             termina = true;
         }
@@ -91,6 +91,6 @@ int main(int argc, char** argv){
     }
 
     close(sock);
-    
+
     return 0;
 }
